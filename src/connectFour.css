@@ -21,9 +21,9 @@
 }
 
 .board__row__cell--red {
-  background-color: red;
+  background-image: radial-gradient(20px at 25px 50%, red 0%, red 25px, rgba(0, 0,0,0))
 }
 
 .board__row__cell--yellow {
-  background-color: yellow;
+  background-image: radial-gradient(20px at 25px 50%, rgb(248, 249, 103) 0%, rgb(248, 249, 103) 25px, rgba(0, 0,0,0))
 }
