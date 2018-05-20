@@ -104,19 +104,3 @@ let isWinning = (state, pos) =>
   isHorizontallyWinning(state, pos)
   || isVerticallyWinning(state, pos)
   || isDiagonallyWinning(state, pos);
-
-let printGrid = grid =>
-  grid
-  |> Array.to_list
-  |> List.rev
-  |> List.iteri((index, row) => {
-       let rowString =
-         row
-         |> Array.fold_left(
-              (string, cell) => string ++ cellToString(cell) ++ " ",
-              ""
-            );
-       print_endline(
-         string_of_int(Array.length(row) - index - 2) ++ "   " ++ rowString
-       );
-     });
