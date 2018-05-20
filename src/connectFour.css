@@ -1,7 +1,7 @@
 .board {
   display: table;
   margin: 0 auto;
-  border: thin solid black;
+  border: thick solid darkblue;
   border-collapse: collapse;
 }
 
@@ -13,17 +13,18 @@
   display: table-cell;
   width: 50px;
   height: 50px;
-  border: thin solid black;
+  background-color: blue;
 }
 
 .board__row__cell--empty {
   cursor: pointer;
+  background-image: radial-gradient(20px at 25px 50%, white 0%, white 20px, rgba(0, 0,0,0));
 }
 
 .board__row__cell--red {
-  background-image: radial-gradient(20px at 25px 50%, red 0%, red 25px, rgba(0, 0,0,0))
+  background-image: radial-gradient(20px at 25px 50%, red 0%, red 20px, rgba(0, 0,0,0))
 }
 
 .board__row__cell--yellow {
-  background-image: radial-gradient(20px at 25px 50%, rgb(248, 249, 103) 0%, rgb(248, 249, 103) 25px, rgba(0, 0,0,0))
+  background-image: radial-gradient(20px at 25px 50%, rgb(248, 249, 103) 0%, rgb(248, 249, 103) 20px, rgba(0, 0,0,0))
 }
