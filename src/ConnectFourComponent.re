@@ -49,7 +49,7 @@ let make = _children => {
   ...component,
   initialState: () => {
     gameBoard: {
-      board: Array.make_matrix(6, 7, Empty),
+      board: Array.make_matrix(nbCellY, nbCellX, Empty),
       boardX: nbCellX,
       boardY: nbCellY
     },
@@ -74,7 +74,7 @@ let make = _children => {
     | Restart =>
       ReasonReact.Update({
         gameBoard: {
-          board: Array.make_matrix(6, 7, Empty),
+          board: Array.make_matrix(nbCellY, nbCellX, Empty),
           boardX: nbCellX,
           boardY: nbCellY
         },
