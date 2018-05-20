@@ -1,0 +1,29 @@
+.board {
+  display: table;
+  margin: 0 auto;
+  border: thin solid black;
+  border-collapse: collapse;
+}
+
+.board__row {
+  display: table-row;
+}
+
+.board__row__cell {
+  display: table-cell;
+  width: 50px;
+  height: 50px;
+  border: thin solid black;
+}
+
+.board__row__cell--empty {
+  cursor: pointer;
+}
+
+.board__row__cell--red {
+  background-color: red;
+}
+
+.board__row__cell--yellow {
+  background-color: yellow;
+}
