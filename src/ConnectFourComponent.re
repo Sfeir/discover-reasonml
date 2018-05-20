@@ -9,7 +9,7 @@ type actionT =
 type stateT = {
   gameBoard: gameBoardT,
   currentPlayer: cellT,
-  winner: cellT
+  winner: option(cellT)
 };
 
 let displayBoard = (gameBoard, send) => {
@@ -54,22 +54,23 @@ let make = _children => {
       boardY: nbCellY
     },
     currentPlayer: Red,
-    winner: Empty
+    winner: None
   },
   reducer: (action, state: stateT) =>
     switch action {
     | Click(x) =>
       switch state.winner {
-      | Empty =>
+      | None =>
         let y = getMoveY(state.gameBoard, x);
         state.gameBoard.board[y][x] = state.currentPlayer;
         ReasonReact.Update({
           ...state,
           winner:
-            isWinning(state.gameBoard, (x, y)) ? state.currentPlayer : Empty,
+            isWinning(state.gameBoard, (x, y)) ?
+              Some(state.currentPlayer) : None,
           currentPlayer: state.currentPlayer === Red ? Yellow : Red
         });
-      | _ => ReasonReact.NoUpdate
+      | Some(_) => ReasonReact.NoUpdate
       }
     | Restart =>
       ReasonReact.Update({
@@ -79,25 +80,26 @@ let make = _children => {
           boardY: nbCellY
         },
         currentPlayer: Red,
-        winner: Empty
+        winner: None
       })
     },
   render: ({state, send}) =>
     <div>
       (displayBoard(state.gameBoard, send))
       (
-        if (state.winner !== Empty) {
+        switch state.winner {
+        | Some(winner) =>
           <div>
-            (ReasonReact.string("Winner : " ++ cellToString(state.winner)))
+            (ReasonReact.string("Winner : " ++ cellToString(winner)))
             <br />
             <button onClick=((_) => send(Restart))>
               (ReasonReact.string("Restart"))
             </button>
-          </div>;
-        } else {
+          </div>
+        | None =>
           ReasonReact.string(
             "Current player : " ++ cellToString(state.currentPlayer)
-          );
+          )
         }
       )
     </div>
