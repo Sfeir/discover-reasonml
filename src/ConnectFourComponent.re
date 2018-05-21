@@ -16,8 +16,7 @@ let displayBoard = (gameBoard, send) => {
   let domBoard =
     gameBoard.board
     |> Array.to_list
-    |> List.rev
-    |> List.map(row => {
+    |> List.rev_map(row => {
          let rowElements =
            row
            |> Array.mapi((x, cell) =>
