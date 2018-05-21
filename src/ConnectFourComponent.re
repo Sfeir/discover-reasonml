@@ -55,7 +55,7 @@ let make = _children => {
     currentPlayer: Red,
     winner: None
   },
-  reducer: (action, state: stateT) =>
+  reducer: (action, state) =>
     switch action {
     | Click(x) =>
       switch state.winner {
