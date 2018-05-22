@@ -17,17 +17,17 @@
   height: 300px;
 }
 
-.piece {
+.disc {
   width: 40px;
   height: 40px;
   margin: 5px;
   border-radius: 50%;
 }
 
-.piece-red {
+.disc-red {
   background-color: red;
 }
 
-.piece-yellow {
+.disc-yellow {
   background-color: yellow;
 }

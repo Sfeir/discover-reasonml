@@ -18,13 +18,13 @@ let reducer = (action, state) =>
 
 let component = ReasonReact.reducerComponent("App");
 
-let getPieces = col =>
+let getDiscs = col =>
   col
-  |. List.map(piece => {
+  |. List.map(disc => {
        let className =
-         "piece piece-"
+         "disc disc-"
          ++ (
-           switch (piece) {
+           switch (disc) {
            | Connect4.Red => "red"
            | Connect4.Yellow => "yellow"
            }
@@ -37,7 +37,7 @@ let getPieces = col =>
 let getColumns = (board, onClick) =>
   board
   |. List.mapWithIndex((i, col) =>
-       <div className="column" onClick=(onClick(i))> (col |. getPieces) </div>
+       <div className="column" onClick=(onClick(i))> (col |. getDiscs) </div>
      )
   |. List.toArray
   |. ReasonReact.array;

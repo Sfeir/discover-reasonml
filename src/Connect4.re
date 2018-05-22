@@ -1,20 +1,20 @@
 open Belt;
 
-type piece =
+type disc =
   | Red
   | Yellow;
 
-type board = list(list(piece));
+type board = list(list(disc));
+
+type game = {
+  board,
+  turn: disc,
+  winner: option(disc),
+};
 
 let numColumns = 7;
 
 let numLines = 6;
-
-type game = {
-  board,
-  turn: piece,
-  winner: option(piece),
-};
 
 let nextTurn =
   fun
@@ -40,7 +40,8 @@ let window4 = xs => {
   aux(xs, []) |. List.reverse;
 };
 
-let drop = (l, n) => List.drop(l, n) |. Option.getWithDefault([]);
+/* like List.drop but return an empty list if there are not enough elements */
+let drop = (l, n) => l |. List.drop(n) |. Option.getWithDefault([]);
 
 let has4ConnectedVertically = xs => xs |. window4 |. List.some(equal4);
 
@@ -54,14 +55,15 @@ let has4ConnectedDiagonalDown = ((c1, c2, c3, c4)) =>
   (drop(c1, 3), drop(c2, 2), drop(c3, 1), c4) |. has4ConnectedSideBySide;
 
 let has4Connected = columns =>
-  List.some(columns, has4ConnectedVertically)
-  || List.map(columns, List.reverse)
-  |. window4
-  |. (
-    fourConsecutiveColumns =>
-      List.some(fourConsecutiveColumns, has4ConnectedSideBySide)
-      || List.some(fourConsecutiveColumns, has4ConnectedDiagonalUp)
-      || List.some(fourConsecutiveColumns, has4ConnectedDiagonalDown)
+  List.(
+    some(columns, has4ConnectedVertically)
+    || map(columns, reverse)
+    |. window4
+    |. some(fourColumns =>
+         has4ConnectedSideBySide(fourColumns)
+         || has4ConnectedDiagonalUp(fourColumns)
+         || has4ConnectedDiagonalDown(fourColumns)
+       )
   );
 
 let init = () => {

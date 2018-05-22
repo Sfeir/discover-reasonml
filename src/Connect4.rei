@@ -1,13 +1,13 @@
-type piece =
+type disc =
   | Red
   | Yellow;
 
-type board = list(list(piece));
+type board = list(list(disc));
 
 type game = {
   board,
-  turn: piece,
-  winner: option(piece),
+  turn: disc,
+  winner: option(disc),
 };
 
 let init: unit => game;
