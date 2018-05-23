@@ -20,11 +20,14 @@
   justify-content: flex-start;
   width: var(--disc-space);
   height: calc(var(--disc-space) * 6);
-  cursor: pointer;
   position: relative;
 }
 
-.column:hover::before {
+.board:not(.turn-none) .column {
+  cursor: pointer;
+}
+
+.board:not(.turn-none) .column:hover::before {
   position: absolute;
   top: calc((var(--disc-size) + 3 * var(--disc-margin)) * -1);
   content: '';
