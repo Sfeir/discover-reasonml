@@ -18,39 +18,17 @@ let reducer = (action, state) =>
 
 let component = ReasonReact.reducerComponent("App");
 
-let getDiscs = col =>
-  col
-  |. List.map(disc => {
-       let className =
-         "disc disc-"
-         ++ (
-           switch (disc) {
-           | Connect4.Red => "red"
-           | Connect4.Yellow => "yellow"
-           }
-         );
-       <div className />;
-     })
-  |. List.toArray
-  |. ReasonReact.array;
-
-let getColumns = (board, onClick) =>
-  board
-  |. List.mapWithIndex((i, col) =>
-       <div className="column" onClick=(onClick(i))> (col |. getDiscs) </div>
-     )
-  |. List.toArray
-  |. ReasonReact.array;
-
 let make = _children => {
   ...component,
   initialState,
   reducer,
-  render: ({state: {Connect4.board}, send}) =>
+  render: ({state: {Connect4.board, turn, winner}, send}) =>
     <div className="App">
-      <div className="board">
-        (board |. getColumns((i, _) => send(Play(i))))
-      </div>
+      <Board
+        board
+        turn=?(Option.isNone(winner) ? Some(turn) : None)
+        onPlay=(colIndex => send(Play(colIndex)))
+      />
       <br />
       <button onClick=((_) => send(Reset))>
         (ReasonReact.string("Reset"))

@@ -1,33 +1,3 @@
 .App {
   text-align: center;
 }
-
-.board {
-  display: inline-flex;
-  flex-direction: row;
-  align-items: flex-end;
-  background-color: blue;
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  width: 50px;
-  height: 300px;
-}
-
-.disc {
-  width: 40px;
-  height: 40px;
-  margin: 5px;
-  border-radius: 50%;
-}
-
-.disc-red {
-  background-color: red;
-}
-
-.disc-yellow {
-  background-color: yellow;
-}
