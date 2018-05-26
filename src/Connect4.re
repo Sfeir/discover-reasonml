@@ -31,20 +31,18 @@ let zip4 = (l1, l2, l3, l4) =>
     )
   );
 
-let window4 = xs => {
-  let rec aux = (ys, windows) =>
-    switch (ys) {
-    | [a, b, c, d, ...t] =>
-      aux([b, c, d, ...t], [(a, b, c, d), ...windows])
-    | _ => windows
-    };
-  aux(xs, []) |. List.reverse;
-};
+let rec windowsOf4 =
+  fun
+  | [a, b, c, d, ...tail] => [
+      (a, b, c, d),
+      ...windowsOf4([b, c, d, ...tail]),
+    ]
+  | _ => [];
 
 /* like List.drop but return an empty list if there are not enough elements */
 let drop = (l, n) => l |. List.drop(n) |. Option.getWithDefault([]);
 
-let has4ConnectedVertically = xs => xs |. window4 |. List.some(equal4);
+let has4ConnectedVertically = xs => xs |. windowsOf4 |. List.some(equal4);
 
 let has4ConnectedSideBySide = ((c1, c2, c3, c4)) =>
   zip4(c1, c2, c3, c4) |. List.some(equal4);
@@ -59,7 +57,7 @@ let has4Connected = columns =>
   List.(
     some(columns, has4ConnectedVertically)
     || map(columns, reverse)
-    |. window4
+    |. windowsOf4
     |. some(fourColumns =>
          has4ConnectedSideBySide(fourColumns)
          || has4ConnectedDiagonalUp(fourColumns)
