@@ -13,13 +13,14 @@ type game = {
 };
 
 let numColumns = 7;
-
 let numLines = 6;
 
 let nextTurn =
   fun
   | Red => Yellow
   | Yellow => Red;
+
+/* utility functions to deal with quadruples */
 
 let equal4 = ((a, b, c, d)) => a == b && b == c && c == d;
 
@@ -75,13 +76,16 @@ let init = () => {
 let play = ({board, turn, winner} as game, colIndex) =>
   switch (winner, List.get(board, colIndex)) {
   | (None, Some(column)) when List.length(column) < numLines =>
-    let newColumn = [turn, ...column];
     let newBoard =
-      board |. List.mapWithIndex((i, col) => i == colIndex ? newColumn : col);
+      List.mapWithIndex(board, (i, col) =>
+        i == colIndex ? [turn, ...column] : col
+      );
+
     {
       board: newBoard,
       turn: nextTurn(turn),
       winner: has4Connected(newBoard) ? Some(turn) : None,
     };
+
   | _ => game
   };
