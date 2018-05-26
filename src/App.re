@@ -1,6 +1,7 @@
-open Belt;
-
 [%bs.raw {|require('./App.css')|}];
+
+open Belt;
+module RR = ReasonReact;
 
 type state = Connect4.game;
 
@@ -12,12 +13,11 @@ let initialState = Connect4.init;
 
 let reducer = (action, state) =>
   switch (action) {
-  | Play(column) => ReasonReact.Update(Connect4.play(state, column))
-  | Reset => ReasonReact.Update(Connect4.init())
+  | Play(column) => RR.Update(Connect4.play(state, column))
+  | Reset => RR.Update(Connect4.init())
   };
 
-let component = ReasonReact.reducerComponent("App");
-
+let component = RR.reducerComponent("App");
 let make = _children => {
   ...component,
   initialState,
@@ -30,8 +30,6 @@ let make = _children => {
         onPlay=(colIndex => send(Play(colIndex)))
       />
       <br />
-      <button onClick=((_) => send(Reset))>
-        (ReasonReact.string("Reset"))
-      </button>
+      <button onClick=(_ => send(Reset))> (RR.string("Reset")) </button>
     </div>,
 };

@@ -1,15 +1,14 @@
-open Belt;
-
 [%bs.raw {|require('./Board.css')|}];
 
-let list2el = l => l |. List.toArray |. ReasonReact.array;
+open Belt;
+module RR = ReasonReact;
 
 let discColor =
   fun
   | Connect4.Red => "red"
   | Connect4.Yellow => "yellow";
 
-let component = ReasonReact.statelessComponent("Board");
+let listToElement = l => l |. List.toArray |. RR.array;
 
 let getDiscs = col =>
   List.mapWithIndex(col, (i, disc) =>
@@ -21,20 +20,20 @@ let getDiscs = col =>
 
 let getColumns = (board, onPlay) =>
   List.mapWithIndex(board, (i, col) =>
-    <div
-      className="column" onClick=((_) => onPlay(i)) key=(string_of_int(i))>
-      (List.reverse(col) |. getDiscs |. list2el)
+    <div className="column" onClick=(_ => onPlay(i)) key=(string_of_int(i))>
+      (col |. List.reverse |. getDiscs |. listToElement)
     </div>
   );
 
+let component = RR.statelessComponent("Board");
 let make = (~board, ~turn=?, ~onPlay, _children) => {
   ...component,
   render: _self =>
     <div
       className=(
         "board turn-"
-        ++ (Option.map(turn, discColor) |. Option.getWithDefault("none"))
+        ++ Option.(turn |. map(discColor) |. getWithDefault("none"))
       )>
-      (getColumns(board, onPlay) |. list2el)
+      (board |. getColumns(onPlay) |. listToElement)
     </div>,
 };
