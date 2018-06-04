@@ -1,1 +1,3 @@
-ReactDOMRe.renderToElementWithId(<App greet="BestOfWeb" />, "root");
+let board = [[], [], ["yellow"], ["yellow", "red"], [], [], []];
+
+ReactDOMRe.renderToElementWithId(<App board />, "root");
