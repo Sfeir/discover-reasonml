@@ -3,10 +3,11 @@
 open Belt;
 module RR = ReasonReact;
 
-let discColor =
-  fun
+let discColor = disc =>
+  switch (disc) {
   | Connect4.Red => "red"
-  | Connect4.Yellow => "yellow";
+  | Connect4.Yellow => "yellow"
+  };
 
 let listToElement = l => l |. List.toArray |. RR.array;
 
