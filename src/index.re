@@ -1,6 +1,5 @@
-[%bs.raw {|require('./index.css')|}];
+let message = "Hello BestOfWeb !";
+let element = <h1> (ReasonReact.string(message)) </h1>;
 
-ReactDOMRe.renderToElementWithId(
-  <App message="Welcome to React and Reason" />,
-  "root",
-);
+Js.log(message);
+ReactDOMRe.renderToElementWithId(element, "root");

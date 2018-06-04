@@ -1,0 +1,73 @@
+:root {
+  --disc-space: 50px;
+  --disc-size-ratio: 0.8;
+  --disc-size: calc(var(--disc-space) * var(--disc-size-ratio));
+  --disc-margin: calc((var(--disc-space) - var(--disc-size)) / 2);
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  background: url(board-bg.svg) repeat;
+  background-size: var(--disc-space);
+  background-color: blue;
+  border: var(--disc-margin) solid blue;
+}
+
+.col {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  width: var(--disc-space);
+  height: calc(var(--disc-space) * 6);
+  position: relative;
+}
+
+.board.turn-yellow .col,
+.board.turn-red .col {
+  cursor: pointer;
+}
+
+.col:hover::before {
+  position: absolute;
+  top: calc((var(--disc-size) + var(--disc-margin)) * -1);
+  content: '';
+  display: block;
+  z-index: -1;
+}
+
+.disc,
+.col:hover::before {
+  width: var(--disc-size);
+  height: var(--disc-size);
+  margin: var(--disc-margin);
+  border-radius: 50%;
+}
+
+.disc-red,
+.turn-red .col:hover::before {
+  background-color: red;
+}
+
+.disc-yellow,
+.turn-yellow .col:hover::before {
+  background-color: yellow;
+}
+
+.game {
+  text-align: center;
+}
+
+button {
+  margin: 10px;
+}
