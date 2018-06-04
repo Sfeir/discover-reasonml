@@ -6,6 +6,15 @@ let map = (xs, f) =>
   |. List.toArray
   |. ReasonReact.array;
 
+let discClass = disc =>
+  "disc disc-"
+  ++ (
+    switch (disc) {
+    | Game.Yellow => "yellow"
+    | Game.Red => "red"
+    }
+  );
+
 let component = ReasonReact.statelessComponent("App");
 
 let make = (~board, _children) => {
@@ -20,7 +29,7 @@ let make = (~board, _children) => {
                  col
                  |. List.reverse
                  |. map((disc, key) =>
-                      <div className=("disc disc-" ++ disc) key />
+                      <div className=(discClass(disc)) key />
                     )
                )
              </div>

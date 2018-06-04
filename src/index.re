@@ -1,3 +1,1 @@
-let board = [[], [], ["yellow"], ["yellow", "red"], [], [], []];
-
-ReactDOMRe.renderToElementWithId(<App board />, "root");
+ReactDOMRe.renderToElementWithId(<App board=(Game.initial()) />, "root");
