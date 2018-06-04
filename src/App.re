@@ -1,39 +1,28 @@
-open Belt;
+type state = Game.t;
 
-let map = (xs, f) =>
-  xs
-  |. List.mapWithIndex((i, e) => f(e, string_of_int(i)))
-  |. List.toArray
-  |. ReasonReact.array;
+let initialState = Game.initial;
 
-let discClass = (prefix, disc) =>
-  prefix
-  ++ (
-    switch (disc) {
-    | Game.Yellow => "yellow"
-    | Game.Red => "red"
-    }
-  );
+type action =
+  | Play(int)
+  | Reset;
 
-let component = ReasonReact.statelessComponent("App");
+let reducer = (action, state) =>
+  switch (action) {
+  | Play(colIndex) => ReasonReact.Update(Game.play(state, colIndex))
+  | Reset => ReasonReact.Update(Game.initial())
+  };
 
-let make = (~game: Game.t, _children) => {
+let component = ReasonReact.reducerComponent("App");
+
+let make = _children => {
   ...component,
-  render: _self =>
-    <div className=(discClass("board turn-", game.turn))>
-      (
-        game.board
-        |. map((col, key) =>
-             <div className="col" key>
-               (
-                 col
-                 |. List.reverse
-                 |. map((disc, key) =>
-                      <div className=(discClass("disc disc-", disc)) key />
-                    )
-               )
-             </div>
-           )
-      )
+  initialState,
+  reducer,
+  render: ({state, send}) =>
+    <div className="game">
+      <Board game=state onPlay=(colIndex => send(Play(colIndex))) />
+      <button onClick=(_ => send(Reset))>
+        (ReasonReact.string("Restart"))
+      </button>
     </div>,
 };
