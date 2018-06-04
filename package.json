@@ -1,0 +1,27 @@
+{
+  "name": "discover-reasonml",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "reason-scripts": "1.0.0-beta3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "jest",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "@glennsl/bs-jest": "^0.4.2",
+    "bs-fetch": "^0.3.0",
+    "bs-platform": "^3.1.5",
+    "reason-react": "^0.4.2"
+  },
+  "jest": {
+    "testMatch": [
+      "<rootDir>/src/*_test.bs.js"
+    ]
+  }
+}
