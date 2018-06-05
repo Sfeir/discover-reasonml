@@ -1,1 +1,1 @@
-ReactDOMRe.renderToElementWithId(<App board=(Game.initial()) />, "root");
+ReactDOMRe.renderToElementWithId(<App game=(Game.initial()) />, "root");
