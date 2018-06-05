@@ -29,8 +29,10 @@ let rec windowsOf4 = xs =>
   };
 
 let zip4 = ((l1, l2, l3, l4)) =>
-  List.zipBy(List.zip(l1, l2), List.zip(l3, l4), ((x1, x2), (x3, x4)) =>
-    (x1, x2, x3, x4)
+  List.(
+    zipBy(zip(l1, l2), zip(l3, l4), ((x1, x2), (x3, x4)) =>
+      (x1, x2, x3, x4)
+    )
   );
 
 let zip4diagonalUp = ((l1, l2, l3, l4)) =>
@@ -51,11 +53,14 @@ let equal4 = ((a, b, c, d)) => a === b && b === c && c === d;
 
 let hasWinner = board => {
   open List;
-  let vertical4 = board |. map(windowsOf4) |. flatten;
+  let vertical4 = board |. map(windowsOf4) |. keepMap(head);
+
   let colsRevBy4 = board |. map(reverse) |. windowsOf4;
-  let horizontal4 = colsRevBy4 |. map(zip4) |. flatten;
-  let diagonalUp4 = colsRevBy4 |. map(zip4diagonalUp) |. flatten;
-  let diagonalDown4 = colsRevBy4 |. map(zip4diagonalDown) |. flatten;
+  let topSideBySide4 = zipFunction =>
+    colsRevBy4 |. map(zipFunction) |. map(reverse) |. keepMap(head);
+  let horizontal4 = topSideBySide4(zip4);
+  let diagonalUp4 = topSideBySide4(zip4diagonalUp);
+  let diagonalDown4 = topSideBySide4(zip4diagonalDown);
 
   [|vertical4, horizontal4, diagonalUp4, diagonalDown4|]
   |. concatMany
