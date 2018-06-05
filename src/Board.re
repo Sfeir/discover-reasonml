@@ -20,7 +20,12 @@ let component = ReasonReact.statelessComponent("Board");
 let make = (~game: Game.t, ~onPlay, _children) => {
   ...component,
   render: _self =>
-    <div className=(discClass("board turn-", game.turn))>
+    <div
+      className=(
+        game.turn
+        |. Option.map(discClass("board turn-"))
+        |. Option.getWithDefault("board")
+      )>
       (
         game.board
         |. map((col, i) =>

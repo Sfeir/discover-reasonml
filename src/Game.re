@@ -8,23 +8,29 @@ type board = list(list(disc));
 
 type t = {
   board,
-  turn: disc,
+  turn: option(disc),
 };
 
 let numCols = 7;
 let numRows = 6;
 
-let initial = () => {board: List.make(numCols, []), turn: Yellow};
+let initial = () => {board: List.make(numCols, []), turn: Some(Yellow)};
 
 let replaceAtIndex = (xs, index, newVal) =>
   xs |. List.mapWithIndex((i, x) => i === index ? newVal : x);
 
+let hasWinner = _board => false;
+
 let play = (game, colIndex) =>
-  switch (List.get(game.board, colIndex)) {
-  | Some(col) when List.length(col) < numRows =>
-    let newBoard =
-      game.board |. replaceAtIndex(colIndex, [game.turn, ...col]);
-    let newTurn = game.turn === Yellow ? Red : Yellow;
+  switch (game.turn, List.get(game.board, colIndex)) {
+  | (Some(player), Some(col)) when List.length(col) < numRows =>
+    let newBoard = game.board |. replaceAtIndex(colIndex, [player, ...col]);
+    let newTurn =
+      if (hasWinner(newBoard)) {
+        None;
+      } else {
+        Some(player === Yellow ? Red : Yellow);
+      };
 
     {board: newBoard, turn: newTurn};
 

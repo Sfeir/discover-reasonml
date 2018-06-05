@@ -2,18 +2,21 @@ open Jest;
 open Expect;
 open Game;
 
-let emptyGame = {board: [[], [], [], [], [], [], []], turn: Yellow};
+let emptyGame = {board: [[], [], [], [], [], [], []], turn: Some(Yellow)};
 
-let startedGame = {board: [[], [], [], [Yellow], [], [], []], turn: Red};
+let startedGame = {
+  board: [[], [], [], [Yellow], [], [], []],
+  turn: Some(Red),
+};
 
 let gameState2 = {
   board: [[], [], [], [Red, Yellow], [], [], []],
-  turn: Yellow,
+  turn: Some(Yellow),
 };
 
 let gameStateFull = {
   board: [[], [], [], [Red, Yellow, Red, Yellow, Red, Yellow], [], [], []],
-  turn: Yellow,
+  turn: Some(Yellow),
 };
 
 test("initial", () =>
