@@ -42,3 +42,48 @@ test("full column", () => {
   let afterFull = play(gameStateFull, 3);
   expect(afterFull) |> toBe(gameStateFull);
 });
+
+describe("hasWinner", () => {
+  let vertical = [
+    [],
+    [],
+    [Yellow, Yellow, Yellow, Red],
+    [Red, Red, Red, Yellow],
+    [],
+    [],
+    [],
+  ];
+  let horizontal = [
+    [Red],
+    [Yellow, Red],
+    [Yellow, Yellow],
+    [Yellow, Red],
+    [],
+    [],
+    [],
+  ];
+  let diagonal = [
+    [Red],
+    [Yellow, Yellow, Red],
+    [Yellow, Red, Red, Yellow],
+    [Yellow, Red, Yellow, Red, Red],
+    [],
+    [],
+    [],
+  ];
+
+  test("vertical", () => {
+    let actual = play({board: vertical, turn: Some(Yellow)}, 2);
+    expect(actual.turn) |> toEqual(None);
+  });
+
+  test("horizontal", () => {
+    let actual = play({board: horizontal, turn: Some(Yellow)}, 0);
+    expect(actual.turn) |> toEqual(None);
+  });
+
+  test("diagonal", () => {
+    let actual = play({board: diagonal, turn: Some(Yellow)}, 0);
+    expect(actual.turn) |> toEqual(None);
+  });
+});
